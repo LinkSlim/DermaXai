@@ -1,23 +1,44 @@
-export const analyzeLesion = async (imageFile) => {
-  // In a real scenario, you would use fetch or axios to call your AI endpoint
-  // const formData = new FormData();
-  // formData.append('image', imageFile);
-  // const response = await fetch('/api/detect-lesion', { method: 'POST', body: formData });
-  // return response.json();
+export const analyzeLesion = async (imageFile, clinicalData) => {
+  const formData = new FormData();
+  formData.append('image', imageFile);
+  
+  if (clinicalData) {
+    formData.append('age', clinicalData.age);
+    formData.append('sex', clinicalData.sex);
+    formData.append('localization', clinicalData.location);
+  }
 
-  // Simulated Mock Response for testing the UI flow
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      // randomly pick a mocked result
-      const mockResults = [
-        { type: 'Nevus Melanocítico (Benigno)', confidence: 0.98, riskLevel: 'low' },
-        { type: 'Carcinoma Basocelular', confidence: 0.89, riskLevel: 'medium' },
-        { type: 'Melanoma Detectado', confidence: 0.94, riskLevel: 'high' },
-        { type: 'Queratosis Seborreica (Benigno)', confidence: 0.96, riskLevel: 'low' }
-      ];
-      
-      const randomResult = mockResults[Math.floor(Math.random() * mockResults.length)];
-      resolve(randomResult);
-    }, 3500); // simulate network delay
-  });
+  try {
+    const response = await fetch('/api/predict', {
+      method: 'POST',
+      body: formData
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error en el servidor: ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    // Mapear los campos de la respuesta según el nuevo esquema PredictionResponse
+    let riskLevel = 'low';
+    const typeStr = (data.prediction || '').toLowerCase();
+    if (typeStr.includes('melanoma') || typeStr.includes('carcinoma')) {
+      riskLevel = 'high';
+    } else if (data.prediction_score < 0.7) {
+      riskLevel = 'medium';
+    }
+
+    return {
+      prediction: data.prediction || 'Lesión detectada',
+      prediction_score: data.prediction_score !== undefined ? data.prediction_score : 0,
+      riskLevel: riskLevel,
+      gradcam: data.gradcam_image_base64,
+      lime: data.lime_image_base64,
+      shap: data.shap_image_base64,
+    };
+  } catch (error) {
+    console.error('Error al analizar la lesión:', error);
+    throw error;
+  }
 };

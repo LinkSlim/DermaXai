@@ -1,0 +1,174 @@
+{
+   "openapi": "3.1.0",
+   "info": {
+      "title": "Skin Lesion Classifier",
+      "version": "0.1.0"
+   },
+   "paths": {
+      "/predict": {
+         "post": {
+            "summary": "Predict",
+            "operationId": "predict_predict_post",
+            "requestBody": {
+               "content": {
+                  "multipart/form-data": {
+                     "schema": {
+                        "$ref": "#/components/schemas/Body_predict_predict_post"
+                     }
+                  }
+               },
+               "required": true
+            },
+            "responses": {
+               "200": {
+                  "description": "Successful Response",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref": "#/components/schemas/PredictionResponse"
+                        }
+                     }
+                  }
+               },
+               "422": {
+                  "description": "Validation Error",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref": "#/components/schemas/HTTPValidationError"
+                        }
+                     }
+                  }
+               }
+            }
+         }
+      }
+   },
+   "components": {
+      "schemas": {
+         "Body_predict_predict_post": {
+            "properties": {
+               "image": {
+                  "type": "string",
+                  "contentMediaType": "application/octet-stream",
+                  "title": "Image"
+               },
+               "age": {
+                  "type": "number",
+                  "title": "Age"
+               },
+               "sex": {
+                  "type": "string",
+                  "title": "Sex"
+               },
+               "localization": {
+                  "type": "string",
+                  "title": "Localization"
+               }
+            },
+            "type": "object",
+            "required": [
+               "image",
+               "age",
+               "sex",
+               "localization"
+            ],
+            "title": "Body_predict_predict_post"
+         },
+         "HTTPValidationError": {
+            "properties": {
+               "detail": {
+                  "items": {
+                     "$ref": "#/components/schemas/ValidationError"
+                  },
+                  "type": "array",
+                  "title": "Detail"
+               }
+            },
+            "type": "object",
+            "title": "HTTPValidationError"
+         },
+         "PredictionResponse": {
+            "properties": {
+               "prediction": {
+                  "type": "string",
+                  "title": "Prediction"
+               },
+               "prediction_score": {
+                  "type": "number",
+                  "title": "Prediction Score"
+               },
+               "scores": {
+                  "additionalProperties": {
+                     "type": "number"
+                  },
+                  "type": "object",
+                  "title": "Scores"
+               },
+               "gradcam_image_base64": {
+                  "type": "string",
+                  "title": "Gradcam Image Base64"
+               },
+               "lime_image_base64": {
+                  "type": "string",
+                  "title": "Lime Image Base64"
+               },
+               "shap_image_base64": {
+                  "type": "string",
+                  "title": "Shap Image Base64"
+               }
+            },
+            "type": "object",
+            "required": [
+               "prediction",
+               "prediction_score",
+               "scores",
+               "gradcam_image_base64",
+               "lime_image_base64",
+               "shap_image_base64"
+            ],
+            "title": "PredictionResponse"
+         },
+         "ValidationError": {
+            "properties": {
+               "loc": {
+                  "items": {
+                     "anyOf": [
+                        {
+                           "type": "string"
+                        },
+                        {
+                           "type": "integer"
+                        }
+                     ]
+                  },
+                  "type": "array",
+                  "title": "Location"
+               },
+               "msg": {
+                  "type": "string",
+                  "title": "Message"
+               },
+               "type": {
+                  "type": "string",
+                  "title": "Error Type"
+               },
+               "input": {
+                  "title": "Input"
+               },
+               "ctx": {
+                  "type": "object",
+                  "title": "Context"
+               }
+            },
+            "type": "object",
+            "required": [
+               "loc",
+               "msg",
+               "type"
+            ],
+            "title": "ValidationError"
+         }
+      }
+   }
+}

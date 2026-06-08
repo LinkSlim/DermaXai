@@ -6,7 +6,7 @@ export default function ResultCard({ result, image, onReset }) {
   const [viewMode, setViewMode] = useState('original'); // 'original' | 'xai'
   const [xaiMethod, setXaiMethod] = useState('gradcam'); // 'gradcam' | 'lime' | 'shap'
 
-  // result = { type: 'Melanoma', confidence: 0.92, riskLevel: 'high' }
+  // result = { prediction: 'Melanoma', prediction_score: 0.92, riskLevel: 'high' }
 
   const getRiskDetails = (level) => {
     switch (level) {
@@ -119,32 +119,44 @@ export default function ResultCard({ result, image, onReset }) {
           <div className="image-wrapper">
             <img src={image} alt="Lesión analizada" className="result-image" />
             {viewMode === 'xai' && xaiMethod === 'gradcam' && (
-              <div className="xai-overlay gradcam"></div>
+              result?.gradcam ? (
+                <img src={result.gradcam.startsWith('data:image') ? result.gradcam : `data:image/jpeg;base64,${result.gradcam}`} alt="Grad-CAM" className="xai-overlay" style={{ objectFit: 'contain', width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }} />
+              ) : (
+                <div className="xai-overlay gradcam"></div>
+              )
             )}
             {viewMode === 'xai' && xaiMethod === 'lime' && (
-              <div className="xai-overlay lime">
-                {limeCircles.map((circle, i) => (
-                  <div key={i} style={{
-                    position: 'absolute',
-                    top: circle.top,
-                    left: circle.left,
-                    width: circle.width,
-                    height: circle.height,
-                    backgroundColor: 'transparent',
-                    border: '3px solid rgba(255, 255, 0, 0.9)',
-                    borderRadius: circle.borderRadius,
-                    transform: 'translate(-50%, -50%)',
-                    boxShadow: '0 0 10px rgba(255,255,0,0.6), inset 0 0 10px rgba(255,255,0,0.6)'
-                  }} />
-                ))}
-              </div>
+              result?.lime ? (
+                <img src={result.lime.startsWith('data:image') ? result.lime : `data:image/jpeg;base64,${result.lime}`} alt="LIME" className="xai-overlay" style={{ objectFit: 'contain', width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }} />
+              ) : (
+                <div className="xai-overlay lime">
+                  {limeCircles.map((circle, i) => (
+                    <div key={i} style={{
+                      position: 'absolute',
+                      top: circle.top,
+                      left: circle.left,
+                      width: circle.width,
+                      height: circle.height,
+                      backgroundColor: 'transparent',
+                      border: '3px solid rgba(255, 255, 0, 0.9)',
+                      borderRadius: circle.borderRadius,
+                      transform: 'translate(-50%, -50%)',
+                      boxShadow: '0 0 10px rgba(255,255,0,0.6), inset 0 0 10px rgba(255,255,0,0.6)'
+                    }} />
+                  ))}
+                </div>
+              )
             )}
             {viewMode === 'xai' && xaiMethod === 'shap' && (
-              <div className="xai-overlay shap" style={{ display: 'grid', gridTemplateColumns: 'repeat(8, 1fr)', gridTemplateRows: 'repeat(8, 1fr)' }}>
-                {shapGrid.map((color, i) => (
-                  <div key={i} style={{ backgroundColor: color }} />
-                ))}
-              </div>
+              result?.shap ? (
+                <img src={result.shap.startsWith('data:image') ? result.shap : `data:image/jpeg;base64,${result.shap}`} alt="SHAP" className="xai-overlay" style={{ objectFit: 'contain', width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }} />
+              ) : (
+                <div className="xai-overlay shap" style={{ display: 'grid', gridTemplateColumns: 'repeat(8, 1fr)', gridTemplateRows: 'repeat(8, 1fr)' }}>
+                  {shapGrid.map((color, i) => (
+                    <div key={i} style={{ backgroundColor: color }} />
+                  ))}
+                </div>
+              )
             )}
             
             {viewMode === 'xai' && (xaiMethod === 'gradcam' || xaiMethod === 'shap') && (
@@ -192,18 +204,18 @@ export default function ResultCard({ result, image, onReset }) {
           
           <div className="detail-row">
             <span className="detail-label">Tipo detectado:</span>
-            <span className="detail-value highlight">{result?.type || 'No identificado'}</span>
+            <span className="detail-value highlight">{result?.prediction || 'No identificado'}</span>
           </div>
           
           <div className="detail-row">
             <span className="detail-label">Confianza IA:</span>
             <div className="confidence-wrapper">
-              <span className="detail-value">{result ? Math.round(result.confidence * 100) : 0}%</span>
+              <span className="detail-value">{result ? Math.round(result.prediction_score * 100) : 0}%</span>
               <div className="confidence-track">
                 <div 
                   className="confidence-fill" 
                   style={{ 
-                    width: `${result ? Math.round(result.confidence * 100) : 0}%`,
+                    width: `${result ? Math.round(result.prediction_score * 100) : 0}%`,
                     backgroundColor: risk.color 
                   }}
                 ></div>

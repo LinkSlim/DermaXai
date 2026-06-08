@@ -11,14 +11,14 @@ function App() {
   const [imagePreview, setImagePreview] = useState(null);
   const [result, setResult] = useState(null);
 
-  const handleImageSelect = async (file, previewUrl) => {
+  const handleImageSelect = async (file, previewUrl, clinicalData) => {
     setImageFile(file);
     setImagePreview(previewUrl);
     setStep('loading');
 
     try {
       // Call our API service
-      const analysisResult = await analyzeLesion(file);
+      const analysisResult = await analyzeLesion(file, clinicalData);
       setResult(analysisResult);
       setStep('result');
     } catch (error) {
