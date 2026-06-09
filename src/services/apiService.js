@@ -36,6 +36,8 @@ export const analyzeLesion = async (imageFile, clinicalData) => {
       gradcam: data.gradcam_image_base64,
       lime: data.lime_image_base64,
       shap: data.shap_image_base64,
+      shap_min: data.shap_min,
+      shap_max: data.shap_max,
     };
   } catch (error) {
     console.error('Error al analizar la lesión:', error);

@@ -167,7 +167,7 @@ export default function ResultCard({ result, image, onReset }) {
                 transform: 'translateY(-50%)',
                 height: '70%',
                 maxHeight: '200px',
-                width: '32px',
+                width: '44px',
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
@@ -176,12 +176,14 @@ export default function ResultCard({ result, image, onReset }) {
                 padding: '8px 4px',
                 borderRadius: '6px',
                 color: 'white',
-                fontSize: '0.75rem',
+                fontSize: '0.6rem',
                 justifyContent: 'space-between',
                 border: '1px solid rgba(255, 255, 255, 0.2)',
                 backdropFilter: 'blur(2px)'
               }}>
-                <span style={{ fontWeight: 'bold' }}>{xaiMethod === 'gradcam' ? '1' : '5'}</span>
+                <span style={{ fontWeight: 'bold', whiteSpace: 'nowrap' }}>
+                  {xaiMethod === 'gradcam' ? '1' : (result?.shap_max != null ? Number(result.shap_max).toExponential(1) : '5')}
+                </span>
                 <div style={{
                   width: '12px',
                   flex: 1,
@@ -190,7 +192,9 @@ export default function ResultCard({ result, image, onReset }) {
                   borderRadius: '2px',
                   border: '1px solid rgba(255,255,255,0.4)'
                 }}></div>
-                <span style={{ fontWeight: 'bold' }}>{xaiMethod === 'gradcam' ? '0' : '-5'}</span>
+                <span style={{ fontWeight: 'bold', whiteSpace: 'nowrap' }}>
+                  {xaiMethod === 'gradcam' ? '0' : (result?.shap_min != null ? Number(result.shap_min).toExponential(1) : '-5')}
+                </span>
               </div>
             )}
           </div>
