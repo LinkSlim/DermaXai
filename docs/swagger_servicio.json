@@ -116,6 +116,14 @@
                "shap_image_base64": {
                   "type": "string",
                   "title": "Shap Image Base64"
+               },
+               "shap_min": {
+                  "type": "number",
+                  "title": "Shap Min"
+               },
+               "shap_max": {
+                  "type": "number",
+                  "title": "Shap Max"
                }
             },
             "type": "object",

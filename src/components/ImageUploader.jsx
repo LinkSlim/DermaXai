@@ -117,15 +117,15 @@ export default function ImageUploader({ onImageSelect }) {
                   style={{ padding: '0.75rem', borderRadius: '6px', border: '1px solid var(--color-border)', background: 'rgba(255,255,255,0.05)', color: 'white', outline: 'none' }}
                 >
                   <option value="" style={{ color: 'black' }}>Seleccione...</option>
-                  <option value="male" style={{ color: 'black' }}>Masculino</option>
-                  <option value="female" style={{ color: 'black' }}>Femenino</option>
                   <option value="unknown" style={{ color: 'black' }}>Desconocido</option>
+                  <option value="female" style={{ color: 'black' }}>Femenino</option>
+                  <option value="male" style={{ color: 'black' }}>Masculino</option>
                 </select>
               </div>
             </div>
 
             <div className="form-group" style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-              <label style={{ fontSize: '0.85rem', color: 'var(--color-text-muted)' }}>Localización de la Lesión</label>
+              <label style={{ fontSize: '0.85rem', color: 'var(--color-text-muted)' }}>Localización de la lesión</label>
               <select
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
@@ -135,19 +135,19 @@ export default function ImageUploader({ onImageSelect }) {
                 <option value="" style={{ color: 'black' }}>Seleccione...</option>
                 <option value="abdomen" style={{ color: 'black' }}>Abdomen</option>
                 <option value="acral" style={{ color: 'black' }}>Acral</option>
-                <option value="back" style={{ color: 'black' }}>Espalda</option>
-                <option value="chest" style={{ color: 'black' }}>Pecho / Tórax</option>
-                <option value="ear" style={{ color: 'black' }}>Oreja</option>
                 <option value="face" style={{ color: 'black' }}>Cara</option>
-                <option value="foot" style={{ color: 'black' }}>Pie</option>
-                <option value="genital" style={{ color: 'black' }}>Genital</option>
-                <option value="hand" style={{ color: 'black' }}>Mano</option>
-                <option value="lower extremity" style={{ color: 'black' }}>Extremidad inferior</option>
                 <option value="neck" style={{ color: 'black' }}>Cuello</option>
                 <option value="scalp" style={{ color: 'black' }}>Cuero cabelludo</option>
-                <option value="trunk" style={{ color: 'black' }}>Tronco</option>
                 <option value="unknown" style={{ color: 'black' }}>Desconocido</option>
+                <option value="back" style={{ color: 'black' }}>Espalda</option>
+                <option value="lower extremity" style={{ color: 'black' }}>Extremidad inferior</option>
                 <option value="upper extremity" style={{ color: 'black' }}>Extremidad superior</option>
+                <option value="genital" style={{ color: 'black' }}>Genital</option>
+                <option value="hand" style={{ color: 'black' }}>Mano</option>
+                <option value="ear" style={{ color: 'black' }}>Oreja</option>
+                <option value="chest" style={{ color: 'black' }}>Pecho / Tórax</option>
+                <option value="foot" style={{ color: 'black' }}>Pie</option>
+                <option value="trunk" style={{ color: 'black' }}>Tronco</option>
               </select>
             </div>
 
