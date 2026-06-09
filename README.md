@@ -20,3 +20,10 @@ Make sure you have the dependencies installed.
 If you don't have them, run the following in the terminal:  ```npm install```.
 
 Then run ```npm run dev``` to start the web server at http://localhost:5173/
+
+## Share with a URL
+Use `ngrok` to share your web server with someone else.  
+Run the following in the terminal:  ```ngrok http 5173```.
+
+Then, ngrok will give you a URL that you can share with someone else.  
+That URL will be something like ```https://finishing-bloating-ongoing.ngrok-free.dev```.
