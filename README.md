@@ -1,7 +1,6 @@
 # 🩺 Skin Lesion Classifier Frontend
 
-**Description:**
-This repository contains the frontend application developed for a Master's Thesis (TFM) focused on skin lesion classification. The web interface allows users to upload dermatological images alongside clinical metadata (age, sex, and lesion localization) for AI-driven analysis. Beyond displaying the predicted classification and confidence scores, the application integrates Explainable AI (XAI) visualizations—including **Grad-CAM, LIME, and SHAP**—to help users interpret and understand the model's diagnostic decisions.
+This repository contains the frontend application developed for a Master's Thesis (TFM) focused on skin lesion classification. The web interface allows users to upload dermatological images alongside clinical metadata (age, sex, and lesion localization) for AI-driven analysis. Beyond displaying the predicted classification and confidence scores, the application integrates Explainable AI (XAI) visualizations-including **Grad-CAM, LIME, and SHAP**-to help users interpret and understand the model's diagnostic decisions.
 
 ## Run Web Server
 Make sure you have the dependencies installed.  
