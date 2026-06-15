@@ -227,6 +227,27 @@ export default function ResultCard({ result, image, onReset }) {
             </div>
           </div>
           
+          {result?.scores && Object.entries(result.scores)
+            .filter(([key]) => key !== result.prediction)
+            .sort(([,a], [,b]) => b - a)
+            .map(([key, score]) => (
+              <div className="detail-row" key={key} style={{ marginTop: '-0.5rem', opacity: 0.8 }}>
+                <span className="detail-label" style={{ fontSize: '0.8rem', textTransform: 'none' }}>{key}:</span>
+                <div className="confidence-wrapper" style={{ gap: '0.5rem' }}>
+                  <span className="detail-value" style={{ fontSize: '1rem' }}>{Math.round(score * 100)}%</span>
+                  <div className="confidence-track" style={{ height: '6px' }}>
+                    <div 
+                      className="confidence-fill" 
+                      style={{ 
+                        width: `${Math.round(score * 100)}%`,
+                        backgroundColor: 'var(--color-text-muted)' 
+                      }}
+                    ></div>
+                  </div>
+                </div>
+              </div>
+          ))}
+          
           <div className="disclaimer-box">
             <p className="disclaimer-text">
               <strong>Aviso Médico:</strong> Este análisis es generado por inteligencia artificial y tiene fines únicamente informativos. 

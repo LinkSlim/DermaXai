@@ -32,6 +32,7 @@ export const analyzeLesion = async (imageFile, clinicalData) => {
     return {
       prediction: data.prediction || 'Lesión detectada',
       prediction_score: data.prediction_score !== undefined ? data.prediction_score : 0,
+      scores: data.scores || {},
       riskLevel: riskLevel,
       gradcam: data.gradcam_image_base64,
       lime: data.lime_image_base64,
