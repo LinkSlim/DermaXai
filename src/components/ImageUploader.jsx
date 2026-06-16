@@ -6,6 +6,7 @@ export default function ImageUploader({ onImageSelect }) {
   const [isDragging, setIsDragging] = useState(false);
   const [preview, setPreview] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
+  const [error, setError] = useState(null);
   const fileInputRef = useRef(null);
 
   // Form states
@@ -24,7 +25,11 @@ export default function ImageUploader({ onImageSelect }) {
   };
 
   const processFile = (file) => {
-    if (!file || !file.type.startsWith('image/')) return;
+    setError(null);
+    if (!file || !file.type.startsWith('image/')) {
+      setError('Formato no permitido. Por favor, sube una imagen válida (JPG, PNG, WEBP).');
+      return;
+    }
 
     const reader = new FileReader();
     reader.onloadend = () => {
@@ -82,6 +87,7 @@ export default function ImageUploader({ onImageSelect }) {
             </div>
             <h3 className="uploader-title">Sube o arrastra la imagen</h3>
             <p className="uploader-desc">Archivos soportados: JPG, PNG, WEBP (hasta 10MB)</p>
+            {error && <p style={{ color: 'var(--color-danger, #ff4d4f)', marginTop: '0.5rem', fontWeight: '500', fontSize: '0.9rem' }}>{error}</p>}
             <button className="btn btn-primary mt-4" style={{ margin: '1rem auto 0', display: 'flex' }}>Explorar archivos</button>
           </div>
         </div>
