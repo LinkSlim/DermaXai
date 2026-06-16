@@ -65,6 +65,13 @@ export default function ImageUploader({ onImageSelect }) {
 
   return (
     <div className="glass-panel animate-fade-in" style={{ padding: '2rem', width: '100%', maxWidth: '500px', margin: '0 auto' }}>
+      <input
+        type="file"
+        ref={fileInputRef}
+        style={{ display: 'none' }}
+        accept="image/*"
+        onChange={handleChange}
+      />
       {!preview ? (
         <div
           className={`uploader-zone ${isDragging ? 'dragging' : ''}`}
@@ -74,13 +81,6 @@ export default function ImageUploader({ onImageSelect }) {
           onDrop={handleDrop}
           onClick={() => fileInputRef.current?.click()}
         >
-          <input
-            type="file"
-            ref={fileInputRef}
-            style={{ display: 'none' }}
-            accept="image/*"
-            onChange={handleChange}
-          />
           <div className="uploader-content">
             <div className="icon-circle">
               <UploadCloud size={40} className="upload-icon" />
@@ -93,8 +93,18 @@ export default function ImageUploader({ onImageSelect }) {
         </div>
       ) : (
         <div className="form-container">
-          <div className="preview-mini" style={{ marginBottom: '1.5rem', borderRadius: '8px', overflow: 'hidden', height: '200px', border: '1px solid var(--color-border)' }}>
+          <div className="preview-mini" style={{ marginBottom: '1.5rem', position: 'relative', borderRadius: '8px', overflow: 'hidden', height: '200px', border: '1px solid var(--color-border)' }}>
             <img src={preview} alt="Selected lesion" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+            <div style={{ position: 'absolute', top: '10px', right: '10px' }}>
+              <button 
+                type="button" 
+                className="btn btn-primary" 
+                style={{ padding: '0.4rem 0.8rem', fontSize: '0.8rem', display: 'flex', alignItems: 'center', gap: '0.4rem', background: 'rgba(0,0,0,0.6)', border: '1px solid rgba(255,255,255,0.2)', backdropFilter: 'blur(4px)' }}
+                onClick={() => fileInputRef.current?.click()}
+              >
+                <ImageIcon size={14} /> Cambiar imagen
+              </button>
+            </div>
           </div>
 
           <h3 style={{ marginBottom: '1.2rem', color: 'var(--color-text-main)', textAlign: 'center' }}>Datos Clínicos del Paciente</h3>
