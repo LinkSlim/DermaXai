@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Sparkles, BrainCircuit } from 'lucide-react';
+import { Sparkles, BrainCircuit, XCircle } from 'lucide-react';
 import './Loader.css';
 
-export default function Loader() {
+export default function Loader({ onCancel }) {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
@@ -42,6 +42,16 @@ export default function Loader() {
         <div className="progress-bar" style={{ width: `${progress}%` }}></div>
       </div>
       <div className="progress-text">{Math.floor(progress)}% completado</div>
+      
+      {onCancel && (
+        <button 
+          onClick={onCancel}
+          className="btn btn-outline mt-6" 
+          style={{ margin: '1.5rem auto 0', display: 'flex', alignItems: 'center', gap: '0.5rem', borderColor: 'var(--color-danger)', color: 'var(--color-danger)' }}
+        >
+          <XCircle size={18} /> Cancelar análisis
+        </button>
+      )}
     </div>
   );
 }
