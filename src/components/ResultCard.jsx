@@ -56,12 +56,21 @@ export default function ResultCard({ result, image, onReset }) {
         v = (v + 1) / 2;
         v = Math.max(0, Math.min(1, v));
 
-        // Aplicar la paleta de colores jet al valor suavizado
-        const r = Math.max(0, Math.min(1, 1.5 - Math.abs(4 * v - 3)));
-        const g = Math.max(0, Math.min(1, 1.5 - Math.abs(4 * v - 2)));
-        const b = Math.max(0, Math.min(1, 1.5 - Math.abs(4 * v - 1)));
+        // Aplicar la paleta de colores SHAP: #1E88E5 (Blue) -> #ffffff (White) -> #FF0D57 (Red/Pink)
+        let r, g, b;
+        if (v < 0.5) {
+          const ratio = v * 2; // 0 to 1
+          r = 30 * (1 - ratio) + 255 * ratio;
+          g = 136 * (1 - ratio) + 255 * ratio;
+          b = 229 * (1 - ratio) + 255 * ratio;
+        } else {
+          const ratio = (v - 0.5) * 2; // 0 to 1
+          r = 255 * (1 - ratio) + 255 * ratio; // always 255
+          g = 255 * (1 - ratio) + 13 * ratio;
+          b = 255 * (1 - ratio) + 87 * ratio;
+        }
         
-        grid.push(`rgba(${Math.round(r * 255)}, ${Math.round(g * 255)}, ${Math.round(b * 255)}, 0.5)`);
+        grid.push(`rgba(${Math.round(r)}, ${Math.round(g)}, ${Math.round(b)}, 0.6)`);
       }
     }
     return grid;
@@ -188,7 +197,9 @@ export default function ResultCard({ result, image, onReset }) {
                   width: '12px',
                   flex: 1,
                   margin: '6px 0',
-                  background: 'linear-gradient(to top, rgba(0,0,128,1) 0%, rgba(0,0,255,1) 12.5%, rgba(0,255,255,1) 37.5%, rgba(255,255,0,1) 62.5%, rgba(255,0,0,1) 87.5%, rgba(128,0,0,1) 100%)',
+                  background: xaiMethod === 'gradcam' 
+                    ? 'linear-gradient(to top, rgba(0,0,128,1) 0%, rgba(0,0,255,1) 12.5%, rgba(0,255,255,1) 37.5%, rgba(255,255,0,1) 62.5%, rgba(255,0,0,1) 87.5%, rgba(128,0,0,1) 100%)'
+                    : 'linear-gradient(to top, #1E88E5 0%, #ffffff 50%, #FF0D57 100%)',
                   borderRadius: '2px',
                   border: '1px solid rgba(255,255,255,0.4)'
                 }}></div>
