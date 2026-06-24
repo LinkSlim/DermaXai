@@ -59,16 +59,16 @@ function App() {
         )}
 
         {step === 'result' && (
-          <ResultCard 
-            result={result} 
-            image={imagePreview} 
-            onReset={resetAnalysis} 
+          <ResultCard
+            result={result}
+            image={imagePreview}
+            onReset={resetAnalysis}
           />
         )}
       </main>
-      
+
       <footer style={{ marginTop: 'auto', padding: '2rem 0', textAlign: 'center', color: 'var(--color-text-muted)', fontSize: '0.85rem' }}>
-        &copy; {new Date().getFullYear()} DermaXai. Solo para fines demostrativos y educativos.
+        &copy; {new Date().getFullYear()} DermaXai. Solo para fines demostrativos y educativos. <br /> Proyecto realizado por Jesús Márquez Mora y Roberto Alonso Herraiz.
       </footer>
     </div>
   );
