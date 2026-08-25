@@ -1,4 +1,4 @@
-export const analyzeLesion = async (imageFile, clinicalData) => {
+export const analyzeLesion = async (imageFile, clinicalData, signal) => {
   const formData = new FormData();
   formData.append('image', imageFile);
   
@@ -11,7 +11,8 @@ export const analyzeLesion = async (imageFile, clinicalData) => {
   try {
     const response = await fetch('/api/predict', {
       method: 'POST',
-      body: formData
+      body: formData,
+      signal
     });
 
     if (!response.ok) {
